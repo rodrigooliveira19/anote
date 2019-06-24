@@ -1,17 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Anote
+      Anotações
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-card *ngFor="let anotacao of anotacoes">
+    <ion-card-content>
+      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
+      <ion-label>{{anotacao.descricao}}</ion-label>
+    </ion-card-content>
+  </ion-card>
   <ion-fab vertical="bottom" horizontal="end">
     <ion-fab-button (click)="adicionarAnotacao('anotacao-cad')">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
 </ion-content>

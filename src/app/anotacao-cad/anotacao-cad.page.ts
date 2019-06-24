@@ -1,5 +1,7 @@
 import { Anotacao } from './../model/anotacao';
 import { Component, OnInit } from '@angular/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-anotacao-cad',
@@ -8,21 +10,71 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnotacaoCadPage implements OnInit {
 
-  private anotacao: Anotacao; 
+  private titulo: string; 
+  private descricao: string; 
+  private cor: string; 
 
-  constructor() { }
+  private anotacoes: any[] = []; 
+
+
+  constructor(private nativeStorage: NativeStorage, 
+              private toastCtrl: ToastController) { }
 
   ngOnInit() {
-    this.anotacao = new Anotacao(); 
+    //this.anotacao = new Anotacao(); 
+
+    this.nativeStorage.getItem('anotacoes')
+    .then(anotacoesJson => {
+      this.anotacoes = JSON.parse(anotacoesJson); 
+      console.log(this.anotacoes);  
+    })
+    .catch(() =>{
+      console.log(""+this.anotacoes.length)
+    }); 
   }
 
-  corAnotcao(cor: string) {
-    this.anotacao.cor = cor; 
-    console.log(this.anotacao.cor); 
+  corAnotacao(cor: string) {
+    this.cor = cor; 
+    //console.log(this.anotacao.cor); 
   }
 
   salvar(){
-    alert(this.anotacao.descricao); 
+    if (this.validar()) {
+      this.add(); 
+      this.updateNativeStorage(); 
+    }
+    
+  }
+
+  async validar() {
+    if(!this.titulo || !this.descricao) {
+      let toast = await this.toastCtrl.create({
+        message :'Cadastrar Título e descrição',
+        duration: 3000, 
+        color: 'danger', 
+        position : 'top'
+      }); 
+
+      toast.present(); 
+      return false; 
+    }else {
+      return true; 
+    }
+  }
+
+  add() {
+    //let anotacao = { nome: this.nome, descricao: this.descricao };
+    let anotacao = new Anotacao(); 
+    anotacao.titulo = this.titulo; 
+    anotacao.descricao = this.descricao; 
+    anotacao.cor = this.cor; 
+    
+    this.anotacoes.push(anotacao); 
+    console.log(this.anotacoes); 
+  }
+  updateNativeStorage() {
+    this.nativeStorage.setItem('anotacoes',JSON.stringify(this.anotacoes)); 
+    
   }
 
 }

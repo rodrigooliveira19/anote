@@ -9,28 +9,35 @@
 
 <ion-content>
   <div class="corAnotcao">
-      <ion-button (click)="corAnotcao('success')" size="small" color="success"></ion-button>
-      <ion-button (click)="corAnotcao('secondary')" size="small" color="secondary"></ion-button>
-      <ion-button (click)="corAnotcao('tertiary')" size="small" color="tertiary"></ion-button>
-      <ion-button (click)="corAnotcao('dark')" size="small" color="dark"></ion-button>
-      <ion-button (click)="corAnotcao('warning')" size="small" color="warning"></ion-button>
-      <ion-button (click)="corAnotcao('danger')" size="small" color="danger"></ion-button>
-      <ion-button (click)="corAnotcao('light')" size="small" color="light"></ion-button>
-      <ion-button (click)="corAnotcao('medium')" size="small" color="medium"></ion-button>
+    <ion-button (click)="corAnotacao('success')" size="small" color="success"></ion-button>
+    <ion-button (click)="corAnotacao('secondary')" size="small" color="secondary"></ion-button>
+    <ion-button (click)="corAnotacao('tertiary')" size="small" color="tertiary"></ion-button>
+    <ion-button (click)="corAnotacao('dark')" size="small" color="dark"></ion-button>
+    <ion-button (click)="corAnotacao('warning')" size="small" color="warning"></ion-button>
+    <ion-button (click)="corAnotacao('danger')" size="small" color="danger"></ion-button>
+    <ion-button (click)="corAnotacao('light')" size="small" color="light"></ion-button>
+    <ion-button (click)="corAnotacao('medium')" size="small" color="medium"></ion-button>
   </div>
 
   <ion-item>
     <ion-label position="floating">Título</ion-label>
-    <ion-input [(ngModel)]="this.anotacao.titulo"></ion-input>
+    <ion-input [(ngModel)]="this.titulo"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Descrição</ion-label>
-    <ion-textarea [(ngModel)]="this.anotacao.descricao" rows="17" cols="20"></ion-textarea>
+    <ion-textarea [(ngModel)]="this.descricao" rows="17" cols="20"></ion-textarea>
   </ion-item>
 
   <ion-button expand="block" (click)="salvar()">Salvar</ion-button>
-  
+
+  <ion-card *ngFor="let anotacao of anotacoes" color={{anotacao.cor}}>
+    <ion-card-content >
+      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
+      <ion-label>{{anotacao.descricao}}</ion-label>
+    </ion-card-content>
+  </ion-card>
+
 
 
 </ion-content>
