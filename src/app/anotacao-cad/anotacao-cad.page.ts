@@ -17,7 +17,12 @@ export class AnotacaoCadPage implements OnInit {
   }
 
   corAnotcao(cor: string) {
-    console.log(cor); 
+    this.anotacao.cor = cor; 
+    console.log(this.anotacao.cor); 
+  }
+
+  salvar(){
+    alert(this.anotacao.descricao); 
   }
 
 }

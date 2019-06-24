@@ -9,8 +9,8 @@
 
 <ion-content>
   <div class="corAnotcao">
-      <ion-button (click)="corAnotcao('verde')" size="small" color="success"></ion-button>
-      <ion-button (click)="corAnotcao('azul-claro')" size="small" color="secondary"></ion-button>
+      <ion-button (click)="corAnotcao('success')" size="small" color="success"></ion-button>
+      <ion-button (click)="corAnotcao('secondary')" size="small" color="secondary"></ion-button>
       <ion-button (click)="corAnotcao('tertiary')" size="small" color="tertiary"></ion-button>
       <ion-button (click)="corAnotcao('dark')" size="small" color="dark"></ion-button>
       <ion-button (click)="corAnotcao('warning')" size="small" color="warning"></ion-button>
@@ -24,5 +24,13 @@
     <ion-input [(ngModel)]="this.anotacao.titulo"></ion-input>
   </ion-item>
 
-  {{this.anotacao.titulo}}
+  <ion-item>
+    <ion-label position="floating">Descrição</ion-label>
+    <ion-textarea [(ngModel)]="this.anotacao.descricao" rows="17" cols="20"></ion-textarea>
+  </ion-item>
+
+  <ion-button expand="block" (click)="salvar()">Salvar</ion-button>
+  
+
+
 </ion-content>
