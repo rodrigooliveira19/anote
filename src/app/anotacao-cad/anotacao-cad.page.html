@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="corAnotcao">
+      <ion-button (click)="corAnotcao('verde')" size="small" color="success"></ion-button>
+      <ion-button (click)="corAnotcao('azul-claro')" size="small" color="secondary"></ion-button>
+      <ion-button (click)="corAnotcao('tertiary')" size="small" color="tertiary"></ion-button>
+      <ion-button (click)="corAnotcao('dark')" size="small" color="dark"></ion-button>
+      <ion-button (click)="corAnotcao('warning')" size="small" color="warning"></ion-button>
+      <ion-button (click)="corAnotcao('danger')" size="small" color="danger"></ion-button>
+      <ion-button (click)="corAnotcao('light')" size="small" color="light"></ion-button>
+      <ion-button (click)="corAnotcao('medium')" size="small" color="medium"></ion-button>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Título</ion-label>
+    <ion-input [(ngModel)]="this.anotacao.titulo"></ion-input>
+  </ion-item>
+
+  {{this.anotacao.titulo}}
+</ion-content>
