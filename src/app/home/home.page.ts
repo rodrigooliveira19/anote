@@ -9,6 +9,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 })
 export class HomePage {
 
+  private tituloCor: string = ''; 
+  
   private anotacoes: any[] = [];
 
   constructor(private nativeStorage: NativeStorage, 
@@ -24,6 +26,9 @@ export class HomePage {
     }); 
   }
 
+  buscar(ev: any) {
+    this.tituloCor = ev.detail.value; 
+  }
 
   adicionarAnotacao(namePage: string) {
     this.navCtrl.navigateForward(namePage); 

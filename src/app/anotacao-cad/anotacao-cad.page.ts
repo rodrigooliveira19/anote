@@ -14,6 +14,8 @@ export class AnotacaoCadPage implements OnInit {
   private descricao: string; 
   private cor: string; 
 
+  private tituloCor: string = ''; 
+
   private anotacoes: any[] = []; 
 
 
@@ -68,13 +70,17 @@ export class AnotacaoCadPage implements OnInit {
     anotacao.titulo = this.titulo; 
     anotacao.descricao = this.descricao; 
     anotacao.cor = this.cor; 
-    
+
     this.anotacoes.push(anotacao); 
     console.log(this.anotacoes); 
   }
   updateNativeStorage() {
     this.nativeStorage.setItem('anotacoes',JSON.stringify(this.anotacoes)); 
     
+  }
+
+  buscar(ev: any) {
+    this.tituloCor = ev.detail.value; 
   }
 
 }

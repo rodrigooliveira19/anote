@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       Anotações
     </ion-title>
@@ -8,7 +8,8 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let anotacao of anotacoes">
+  <ion-searchbar animated placeholder="Buscar" (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor" color={{anotacao.cor}}>
     <ion-card-content>
       <ion-card-title>{{anotacao.titulo}}</ion-card-title>
       <ion-label>{{anotacao.descricao}}</ion-label>
