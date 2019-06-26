@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-label><strong>Cor Dominante</strong></ion-label>
+    <ion-radio-group [(ngModel)]="opcao">
+      <ion-item>
+        <ion-label>Vede</ion-label>
+        <ion-radio name="opcao"  color="success" (click)="click('success')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Azul Claro</ion-label>
+        <ion-radio name="opcao"  color="secondary" (click)="click('secondary')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Terciária</ion-label>
+        <ion-radio name="opcao"  color="tertiary" (click)="click('tertiary')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Preto</ion-label>
+        <ion-radio name="opcao"  color="dark" (click)="click('dark')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Amarelo</ion-label>
+        <ion-radio name="opcao" value="warning" color="warning" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Vermelho</ion-label>
+        <ion-radio name="opcao" value="danger" color="danger"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Leve</ion-label>
+        <ion-radio name="opcao" value="light" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Médio</ion-label>
+        <ion-radio name="opcao" value="medium" color="medium"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>

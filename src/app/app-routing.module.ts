@@ -4,7 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'anotacao-cad', loadChildren: './anotacao-cad/anotacao-cad.module#AnotacaoCadPageModule' },
+  { path: 'anotacao-cad', loadChildren: './anotacao-cad/anotacao-cad.module#AnotacaoCadPageModule' },  { path: 'config-page', loadChildren: './config-page/config-page.module#ConfigPagePageModule' },
+
 ];
 
 @NgModule({

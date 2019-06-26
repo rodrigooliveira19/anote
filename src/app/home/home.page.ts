@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, PopoverController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ComponenteConfigComponent } from '../componente-config/componente-config.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomePage {
   private anotacoes: any[] = [];
 
   constructor(private nativeStorage: NativeStorage, 
-              private navCtrl: NavController) {}
+              private navCtrl: NavController, 
+              private popoverCtrl: PopoverController) {}
 
   ngOnInit() {
     this.nativeStorage.getItem('anotacoes')
@@ -32,6 +34,15 @@ export class HomePage {
 
   adicionarAnotacao(namePage: string) {
     this.navCtrl.navigateForward(namePage); 
+  }
+
+  async abrirConfig(ev: any) {
+    let popover = await this.popoverCtrl.create({
+      component: ComponenteConfigComponent, 
+      event: ev
+    }); 
+
+    return await popover.present(); 
   }
 
 }

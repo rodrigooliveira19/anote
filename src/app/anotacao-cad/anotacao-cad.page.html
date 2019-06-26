@@ -31,7 +31,7 @@
 
   <ion-button expand="block" (click)="salvar()">Salvar</ion-button>
 
-  <ion-searchbar animated placeholder="Buscar" (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)"></ion-searchbar>
 
   <ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor"  color={{anotacao.cor}}>
     <ion-card-content >
