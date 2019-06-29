@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button (click)="loadingCards()"></ion-back-button>
     </ion-buttons>
     <ion-title></ion-title>
   </ion-toolbar>
@@ -31,7 +31,7 @@
 
   <ion-button expand="block" (click)="salvar()">Salvar</ion-button>
 
-  <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" debounce=260></ion-searchbar>
 
   <ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor"  color={{anotacao.cor}}>
     <ion-card-content >

@@ -3,44 +3,47 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-item (click)="updateConfig()" slot="end">
+      <ion-icon name="save" color="primary"></ion-icon>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-label><strong>Cor Dominante</strong></ion-label>
-    <ion-radio-group [(ngModel)]="opcao">
+    <ion-radio-group >
       <ion-item>
-        <ion-label>Vede</ion-label>
-        <ion-radio name="opcao"  color="success" (click)="click('success')"></ion-radio>
+        <ion-label>Verde</ion-label>
+        <ion-radio   color="success" (click)="setCorDominante('success')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Azul Claro</ion-label>
-        <ion-radio name="opcao"  color="secondary" (click)="click('secondary')"></ion-radio>
+        <ion-radio   color="secondary" (click)="setCorDominante('secondary')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Terciária</ion-label>
-        <ion-radio name="opcao"  color="tertiary" (click)="click('tertiary')"></ion-radio>
+        <ion-radio   color="tertiary" (click)="setCorDominante('tertiary')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Preto</ion-label>
-        <ion-radio name="opcao"  color="dark" (click)="click('dark')"></ion-radio>
+        <ion-radio   color="dark" (click)="setCorDominante('dark')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Amarelo</ion-label>
-        <ion-radio name="opcao" value="warning" color="warning" ></ion-radio>
+        <ion-radio  value="warning" color="warning" (click)="setCorDominante('warning')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Vermelho</ion-label>
-        <ion-radio name="opcao" value="danger" color="danger"></ion-radio>
+        <ion-radio  value="danger" color="danger" (click)="setCorDominante('danger')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Leve</ion-label>
-        <ion-radio name="opcao" value="light" color="light"></ion-radio>
+        <ion-radio  value="light" color="light" (click)="setCorDominante('light')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Médio</ion-label>
-        <ion-radio name="opcao" value="medium" color="medium"></ion-radio>
+        <ion-radio  value="medium" color="medium" (click)="setCorDominante('medium')"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>

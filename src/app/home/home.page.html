@@ -1,28 +1,42 @@
 <ion-header>
   <ion-item>
-    <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" color="dark"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" debounce=260 color={{this.configApp.corDominante}}>
+    </ion-searchbar>
     <ion-item (click)="abrirConfig($event)">
-      <ion-icon name="more"></ion-icon>
+      <ion-icon name="more" color={{this.configApp.corDominante}} size="large"></ion-icon>
     </ion-item>
   </ion-item>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let categoria of categorias | filtro: tituloCor">
+      <ion-item color={{categoria.cor}}>
+        <ion-label><strong>{{categoria.titulo}}</strong></ion-label>
+      </ion-item>
 
-
-  <ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor" color={{anotacao.cor}}>
-    <ion-card-content>
-      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
-      <ion-label>{{anotacao.descricao}}</ion-label>
-    </ion-card-content>
-  </ion-card>
-
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="excluirCategoria(categoria)">Excluir
+        </ion-item-option>
+        <ion-item-option color="success" (click)="addAnotacao('anotacao-cad')">Add Anotação</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
 
 <ion-footer>
   <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button size="small" (click)="adicionarAnotacao('anotacao-cad')" color="dark">
+    <ion-fab-button size="small" (click)="newCategoria()" color={{this.configApp.corDominante}}>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-footer>
+
+<!--<ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor" color={{anotacao.cor}}>
+    <ion-card-content>
+      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
+      <ion-label>{{anotacao.descricao}}</ion-label>
+    </ion-card-content>
+  </ion-card>-->
+
+<!--(click)="adicionarAnotacao('anotacao-cad')"-->

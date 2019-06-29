@@ -14,7 +14,7 @@ export class AnotacaoCadPage implements OnInit {
   private descricao: string; 
   private cor: string; 
 
-  private tituloCor: string = ''; 
+  private tituloCor: string = "";
 
   private anotacoes: any[] = []; 
 
@@ -23,16 +23,8 @@ export class AnotacaoCadPage implements OnInit {
               private toastCtrl: ToastController) { }
 
   ngOnInit() {
-    //this.anotacao = new Anotacao(); 
-
-    this.nativeStorage.getItem('anotacoes')
-    .then(anotacoesJson => {
-      this.anotacoes = JSON.parse(anotacoesJson); 
-      console.log(this.anotacoes);  
-    })
-    .catch(() =>{
-      console.log(""+this.anotacoes.length)
-    }); 
+    //this.anotacao = new Anotacao();
+    this.loadingCards();     
   }
 
   corAnotacao(cor: string) {
@@ -65,22 +57,37 @@ export class AnotacaoCadPage implements OnInit {
   }
 
   add() {
-    //let anotacao = { nome: this.nome, descricao: this.descricao };
-    let anotacao = new Anotacao(); 
-    anotacao.titulo = this.titulo; 
-    anotacao.descricao = this.descricao; 
-    anotacao.cor = this.cor; 
+    if (this.titulo.trim().length > 0  && this.descricao.trim().length > 0) {
+        let anotacao = new Anotacao(); 
+        anotacao.titulo = this.titulo; 
+        anotacao.descricao = this.descricao; 
+        anotacao.cor = this.cor; 
 
-    this.anotacoes.push(anotacao); 
-    console.log(this.anotacoes); 
+        this.anotacoes.push(anotacao); 
+        console.log(this.anotacoes); 
+    }
   }
+
   updateNativeStorage() {
     this.nativeStorage.setItem('anotacoes',JSON.stringify(this.anotacoes)); 
-    
   }
 
   buscar(ev: any) {
     this.tituloCor = ev.detail.value; 
+    console.log(this.tituloCor); 
+  }
+
+  loadingCards(){
+    this.nativeStorage.getItem('anotacoes')
+    .then(anotacoesJson => {
+      this.anotacoes = JSON.parse(anotacoesJson); 
+      console.log(this.anotacoes);  
+      console.log("recarrregando"); 
+    })
+    .catch(() =>{
+      console.log(""+this.anotacoes.length)
+    }); 
+    
   }
 
 }

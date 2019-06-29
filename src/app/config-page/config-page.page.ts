@@ -1,4 +1,7 @@
+import { ConfigApp } from './../model/config';
 import { Component, OnInit } from '@angular/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-config-page',
@@ -7,16 +10,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigPagePage implements OnInit {
 
-  private opcao: string= "dark"; 
+  private configApp: ConfigApp; 
 
-  constructor() { }
+  constructor(private nativeStorage: NativeStorage, 
+              private toastCtrl: ToastController) { }
 
   ngOnInit() {
+    this.loadingConfigApp(); 
   }
 
-  click(cor: string) {
-    this.opcao = cor; 
-    console.log(this.opcao); 
+  
+  setCorDominante(cor: string) {
+    this.configApp.corDominante = cor; 
+    console.log(this.configApp.corDominante); 
+  } 
+
+  loadingConfigApp() {
+    this.configApp = new ConfigApp(); 
+    this.nativeStorage.getItem('config')
+    .then(config => {
+      if (config != null ) {
+        this.configApp = JSON.parse(config);
+      }
+    })
+    .catch(() =>{
+      console.log("Erro ao buscar config app")
+    }); 
+  }
+
+  async updateConfig() {
+    let toast =  await this.toastCtrl.create({
+      message: 'Salvando configuração',
+      duration: 2000, 
+      color: 'success', 
+      position: 'top', 
+    }); 
+
+    this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
+    toast.present(); 
+    
   }
 
 }
