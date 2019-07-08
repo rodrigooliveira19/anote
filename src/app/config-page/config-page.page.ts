@@ -1,7 +1,7 @@
 import { ConfigApp } from './../model/config';
 import { Component, OnInit } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-config-page',
@@ -13,10 +13,12 @@ export class ConfigPagePage implements OnInit {
   private configApp: ConfigApp; 
 
   constructor(private nativeStorage: NativeStorage, 
+              private navCtrl: NavController, 
               private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.loadingConfigApp(); 
+    
   }
 
   
@@ -36,19 +38,20 @@ export class ConfigPagePage implements OnInit {
     .catch(() =>{
       console.log("Erro ao buscar config app")
     }); 
+  
   }
 
   async updateConfig() {
+    this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
     let toast =  await this.toastCtrl.create({
       message: 'Salvando configuração',
       duration: 2000, 
       color: 'success', 
       position: 'top', 
-    }); 
-
-    this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
-    toast.present(); 
+    });
+    toast.present();
+    this.navCtrl.navigateForward('/home'); 
     
-  }
+  } 
 
 }

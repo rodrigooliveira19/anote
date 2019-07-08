@@ -13,7 +13,7 @@ import { Categoria } from '../model/categoria';
 export class HomePage {
 
   private tituloCor: string ="";
-  private configApp: ConfigApp; 
+  private configApp: any; 
   
   private anotacoes: any[] = [];
   private categorias: any[] = [];
@@ -25,50 +25,68 @@ export class HomePage {
               private toastCtrl: ToastController) {}
 
   ngOnInit() {
-    this.configApp = new ConfigApp(); 
     this.loadingConfigApp(); 
-    //this.loadingCards(); 
     this.loadingCategorias(); 
   }
 
   buscar(ev: any) {
-    this.tituloCor = ev.detail.value; 
-    console.log(this.tituloCor); 
+    this.tituloCor = ev.detail.value;  
   }
 
-  addAnotacao(namePage: string) {
-    this.navCtrl.navigateForward(namePage); 
+  //namePage: string
+  addAnotacao(categoria: Categoria) {
+    let id = categoria.id; 
+    let index = this.findIndex(id); 
+    if (index > -1) {
+      this.navCtrl.navigateForward(['/anotacao-list',this.configApp.corDominante,id,index]);
+    }
+     
   }
 
-  addCategoria(nomeCategoria: string, cor:string) { 
-    if (this.validarCategoria(nomeCategoria,cor)) { 
+  private findIndex(id:number) {
+    for (let index = 0; index < this.categorias.length; index++) {
+      console.log('não'); 
+      if (id === this.categorias[index].id) {
+        console.log('sim'); 
+        return index; 
+      }
+    }
+    return -1; 
+  }
+
+  
+
+   async addCategoria(nomeCategoria: string, cor:string) { 
+    let valido = this.validarCategoria(nomeCategoria,cor); 
+    if (valido === 1) {
       cor = this.validarCorCategoria(cor); 
       let categoria = new Categoria(); 
+      this.configApp.idCategoria = this.configApp.idCategoria + 1; 
+      categoria.id = this.configApp.idCategoria; 
       categoria.titulo = nomeCategoria; 
       categoria.cor = cor; 
-      console.log(categoria.titulo); 
-      console.log(categoria.cor); 
       this.categorias.push(categoria); 
       this.updateNativeStorageCategoria(); 
+
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: 'Verificar dados',
+        duration: 1500,
+        position: 'top'
+      });
+      toast.present();
     }
 
   }
 
-  async validarCategoria(categoria: string, cor:string) {
+  excluirCategoria(categoria: Categoria) {
+  }
+
+   validarCategoria(categoria: string, cor:string){
     if (categoria.trim().length < 1 ||  cor.trim().length < 1 || !categoria ){
-      const toast = await this.toastCtrl.create({
-        message: 'Verificar dados',
-        duration: 2000,
-        position: 'top'
-      });
-
-      toast.present();
-      console.log("passei aq"); 
-      return false;
+      return 0;
     }
-
-    console.log("passei aq 2"); 
-    return true; 
+    return 1; 
   }
 
   validarCorCategoria(cor:string) {
@@ -117,32 +135,48 @@ export class HomePage {
   loadingCategorias() {
     this.nativeStorage.getItem('categorias')
     .then(categoriasJson => {
-      this.categorias = JSON.parse(categoriasJson); 
+      if (categoriasJson != null) {
+        this.categorias = JSON.parse(categoriasJson); 
+        alert('Carregando Categorias: '+this.categorias.length); 
+
+      }
     })
     .catch(() =>{
       console.log("home page "+this.categorias.length)
     }); 
   }
 
+
   loadingConfigApp() {
+    this.configApp = new ConfigApp(); 
     this.nativeStorage.getItem('config')
-    .then(config => {
-      if (config != null ) {
-        this.configApp = JSON.parse(config);
+    .then(configJson => {
+      if (configJson != null) {
+        this.configApp = JSON.parse(configJson); 
+        alert('Encontrei o config: idCategoria: '+this.configApp.idCategoria); 
       }
     })
     .catch(() =>{
-      console.log("Erro ao buscar config app")
+      alert('Não encontrei o config'); 
     }); 
   }
+
+  
+
+  updateConfig() {
+    this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
+    alert('Salvando o config'); 
+  }
+
+  
 
   updateNativeStorageCategoria() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))
     .then((e)=>{
-      console.log("Salvado categoria"+e); 
+      alert('Salvado categoria');
+      this.updateConfig(); 
     })
     .catch((e)=>{
-      console.log("Erro"+e); 
     }); 
   }
 
@@ -156,15 +190,12 @@ export class HomePage {
           name: 'categoria', 
           type: 'text', 
           placeholder: 'Categoria'
-
         }, 
         {
           name: 'cor', 
           type: 'text', 
           placeholder: 'Cor'
-
         }
-      
       ], 
       buttons: [
         {
@@ -181,9 +212,6 @@ export class HomePage {
           }
         }
       ]
-
-    
-       
     }); 
 
     alert.present(); 

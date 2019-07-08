@@ -1,4 +1,5 @@
 export class ConfigApp {
 
-    public corDominante: string = "tertiary"; 
+    public corDominante: string = "dark"; 
+    public idCategoria: number = 0; 
 }
