@@ -117,12 +117,14 @@ export class HomePage {
   }
 
   async abrirConfig(ev: any) {
+    this.navCtrl.navigateForward('/config-page'); 
+    /*
     let popover = await this.popoverCtrl.create({
       component: ComponenteConfigComponent, 
       event: ev
     }); 
-
     return await popover.present(); 
+    */
   }
 
   loadingCards() {

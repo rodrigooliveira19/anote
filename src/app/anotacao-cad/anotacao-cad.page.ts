@@ -106,6 +106,13 @@ export class AnotacaoCadPage implements OnInit {
         anotacao.descricao = this.descricao; 
         anotacao.cor = this.cor; 
 
+        let dt = new Date(); 
+        let data = dt.getDate() +'/'+(dt.getMonth()+1) +'/'+ dt.getFullYear(); 
+        let hora = dt.getHours()+':'+ dt.getMinutes()+':'+dt.getSeconds(); 
+        let dataHora = 'Data: '+data +' '+ hora; 
+
+        anotacao.data = dataHora; 
+
         let size = this.categorias[this.index].anotacao.lenght; 
         this.categorias[this.index].anotacao.push(anotacao);
         if((size + 1) == this.categorias[this.index].anotacao.lenght) {

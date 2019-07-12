@@ -12,38 +12,56 @@
 <ion-content>
   <ion-list>
     <ion-label><strong>Cor Dominante</strong></ion-label>
-    <ion-radio-group >
+    <ion-radio-group>
       <ion-item>
         <ion-label>Verde</ion-label>
-        <ion-radio   color="success" (click)="setCorDominante('success')"></ion-radio>
+        <ion-radio color="success" (click)="setCorDominante('success')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Azul Claro</ion-label>
-        <ion-radio   color="secondary" (click)="setCorDominante('secondary')"></ion-radio>
+        <ion-radio color="secondary" (click)="setCorDominante('secondary')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Terciária</ion-label>
-        <ion-radio   color="tertiary" (click)="setCorDominante('tertiary')"></ion-radio>
+        <ion-radio color="tertiary" (click)="setCorDominante('tertiary')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Preto</ion-label>
-        <ion-radio   color="dark" (click)="setCorDominante('dark')"></ion-radio>
+        <ion-radio color="dark" (click)="setCorDominante('dark')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Amarelo</ion-label>
-        <ion-radio  value="warning" color="warning" (click)="setCorDominante('warning')"></ion-radio>
+        <ion-radio value="warning" color="warning" (click)="setCorDominante('warning')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Vermelho</ion-label>
-        <ion-radio  value="danger" color="danger" (click)="setCorDominante('danger')"></ion-radio>
+        <ion-radio value="danger" color="danger" (click)="setCorDominante('danger')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Leve</ion-label>
-        <ion-radio  value="light" color="light" (click)="setCorDominante('light')"></ion-radio>
+        <ion-radio value="light" color="light" (click)="setCorDominante('light')"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Médio</ion-label>
-        <ion-radio  value="medium" color="medium" (click)="setCorDominante('medium')"></ion-radio>
+        <ion-radio value="medium" color="medium" (click)="setCorDominante('medium')"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-label><strong>Plano de Fundo</strong></ion-label>
+    <ion-radio-group>
+      <ion-item>
+        <ion-label>Padrão</ion-label>
+        <ion-radio color="#f5f6f9" (click)="setCorFundo('#f5f6f9')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Preto</ion-label>
+        <ion-radio color="dark" (click)="setCorFundo('dark')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Terciária</ion-label>
+        <ion-radio color="tertiary" (click)="setCorFundo('tertiary')"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>

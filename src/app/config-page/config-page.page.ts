@@ -26,6 +26,10 @@ export class ConfigPagePage implements OnInit {
     this.configApp.corDominante = cor; 
   } 
 
+  setCorFundo(cor: string) {
+    this.configApp.corDeFundo = cor; 
+  }
+
   loadingConfigApp() {
     this.configApp = new ConfigApp(); 
     this.nativeStorage.getItem('config')
