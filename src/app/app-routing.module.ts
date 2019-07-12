@@ -9,12 +9,18 @@ const routes: Routes = [
 
   { path: 'anotacao-cad/:corDominante/:id/:index', 
     loadChildren: './anotacao-cad/anotacao-cad.module#AnotacaoCadPageModule' },
+  
+  { path: 'anotacao-cad/:corDominante/:id/:index/:indexAnotacao', 
+    loadChildren: './anotacao-cad/anotacao-cad.module#AnotacaoCadPageModule' },
 
   { path: 'config-page', 
     loadChildren: './config-page/config-page.module#ConfigPagePageModule' },
 
   { path: 'anotacao-list/:corDominante/:id/:index', 
-    loadChildren: './anotacao-list/anotacao-list.module#AnotacaoListPageModule' },
+    loadChildren: './anotacao-list/anotacao-list.module#AnotacaoListPageModule' }, 
+  
+  
+    
 
 ];
 

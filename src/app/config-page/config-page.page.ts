@@ -24,7 +24,6 @@ export class ConfigPagePage implements OnInit {
   
   setCorDominante(cor: string) {
     this.configApp.corDominante = cor; 
-    console.log(this.configApp.corDominante); 
   } 
 
   loadingConfigApp() {
@@ -42,15 +41,14 @@ export class ConfigPagePage implements OnInit {
   }
 
   async updateConfig() {
-    this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
-    let toast =  await this.toastCtrl.create({
-      message: 'Salvando configuração',
-      duration: 2000, 
-      color: 'success', 
-      position: 'top', 
-    });
-    toast.present();
-    this.navCtrl.navigateForward('/home'); 
+    this.nativeStorage.setItem('config',JSON.stringify(this.configApp))
+    .then(()=>{
+      this.navCtrl.navigateForward('/home');
+    })
+    .catch(()=>{
+      alert('Não foi possível salvar a configuração'); 
+    }); 
+    
     
   } 
 

@@ -25,6 +25,9 @@ export class HomePage {
               private toastCtrl: ToastController) {}
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
     this.loadingConfigApp(); 
     this.loadingCategorias(); 
   }
@@ -161,14 +164,10 @@ export class HomePage {
     }); 
   }
 
-  
-
   updateConfig() {
     this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
     alert('Salvando o config'); 
   }
-
-  
 
   updateNativeStorageCategoria() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))

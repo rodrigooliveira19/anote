@@ -1,7 +1,7 @@
 import { Anotacao } from './../model/anotacao';
 import { Component, OnInit } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -17,6 +17,7 @@ export class AnotacaoCadPage implements OnInit {
 
   private tituloCor: string = "";
   private index: number; 
+  private indexAnotacao: number; 
   private idCategoria: number; 
   private corDominante: string; 
 
@@ -27,14 +28,24 @@ export class AnotacaoCadPage implements OnInit {
   constructor(private activRoute: ActivatedRoute,
               private nativeStorage: NativeStorage, 
               private toastCtrl: ToastController, 
+              private alertCtrl: AlertController, 
               private navCtrl: NavController) { }
 
   ngOnInit() {
+    /*
     this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante'); 
     this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id')); 
     this.index = Number(this.activRoute.snapshot.paramMap.get('index')); 
+    this.indexAnotacao = Number(this.activRoute.snapshot.paramMap.get('indexAnotacao')); 
+    this.loadingCategorias(); */
+  }
+
+  ionViewWillEnter() {
+    this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante'); 
+    this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id')); 
+    this.index = Number(this.activRoute.snapshot.paramMap.get('index')); 
+    this.indexAnotacao = Number(this.activRoute.snapshot.paramMap.get('indexAnotacao')); 
     this.loadingCategorias(); 
-      
   }
 
   async corAnotacao(cor: string) {
@@ -66,6 +77,7 @@ export class AnotacaoCadPage implements OnInit {
 
   async salvar(){
     if (this.validar() === 1) {
+      this.addQuebraDeLinha(this.descricao); 
       this.add(); 
       this.updateNativeStorage(); 
     }else {
@@ -104,9 +116,25 @@ export class AnotacaoCadPage implements OnInit {
     }
   }
 
+  addQuebraDeLinha(descricao:string) {
+    let novaString : string = " "; 
+    for (let index = 0; index < descricao.length; index++) {
+      novaString+=descricao[index]; 
+      if(descricao[index]===" ") {
+        novaString+=descricao[index]; 
+        if(descricao[index +1]===" " && descricao[index +2]!=" ") {
+          novaString+="\n";
+          alert('Inserir quebra de linha');  
+        }
+      }
+    }
+    this.descricao = novaString; 
+  }
+
   updateNativeStorage() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))
     .then(()=>{
+      this.loadingCategorias(); 
       this.navCtrl.navigateForward(['anotacao-list',this.corDominante,this.idCategoria,this.index]);
     })
     .catch(); 
@@ -129,5 +157,33 @@ export class AnotacaoCadPage implements OnInit {
       alert("Erro não encontrei as categorias"); 
     }); 
   }
+
+  async excluirAnotacao(){
+    let alert = await this.alertCtrl.create({
+      header: 'Confirmação', 
+      message: 'Excluir a anotacao '+ this.categorias[this.index].anotacao[this.indexAnotacao].titulo + ' ?',
+      buttons:[
+        {
+          text:'Cancelar', 
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: ()=>{
+            console.log('Cancelar'); 
+          }
+        },
+        {
+          text:'Confirmar', 
+          cssClass: 'secondary',
+          handler: ()=>{
+            this.categorias[this.index].anotacao.splice(this.indexAnotacao, 1);
+            this.updateNativeStorage(); 
+          }
+        }
+      ]
+    }); 
+
+    await alert.present(); 
+  }
+
 
 }

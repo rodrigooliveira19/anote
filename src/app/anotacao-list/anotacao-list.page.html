@@ -6,22 +6,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-label (click)="r()">
-      <ion-icon name="trash" color={{this.corDominante}} size="large"></ion-icon>
+
+  <ion-label (click)="excluirCategoria()">
+    <ion-icon name="trash" color={{this.corDominante}} size="large"></ion-icon>
   </ion-label>
-  Index: {{this.index}}<br/>
-  CategoriaId:{{this.idCategoria}}
+  
   <ion-list>
-    <ion-card *ngFor="let anotacao of this.categorias[this.index].anotacao | filtro: tituloCor" 
-    color={{anotacao.cor}} (click)="navegar('anotacao-cad')">
+    <ion-card *ngFor="let anotacao of this.categorias[this.index].anotacao | filtro: tituloCor" color={{anotacao.cor}}
+      (click)="editarAnotacao(anotacao)">
       <ion-card-content>
         <ion-card-title>{{anotacao.titulo}}</ion-card-title>
         {{anotacao.descricao}}
       </ion-card-content>
     </ion-card>
   </ion-list>
-
-
 
 </ion-content>
 
