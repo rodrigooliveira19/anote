@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ActivatedRoute } from '@angular/router';
-import { Categoria } from '../model/categoria';
+
 
 @Component({
   selector: 'app-anotacao-list',
@@ -41,11 +41,11 @@ export class AnotacaoListPage implements OnInit {
 
   navegar() {
     this.navCtrl.navigateForward(['/anotacao-cad',this.corDominante,this.idCategoria,this.index]); 
+   
   }
 
   editarAnotacao(anotacao: any) {
     let indexAnotacao = this.categorias[this.index].anotacao.indexOf(anotacao); 
-    alert("index anotação: "+indexAnotacao); 
     this.navCtrl.navigateForward(['/anotacao-cad',this.corDominante,this.idCategoria,this.index,indexAnotacao]); 
   }
 
@@ -58,12 +58,9 @@ export class AnotacaoListPage implements OnInit {
     .then(categoriasJson => {
       if (categoriasJson != null) {
         this.categorias = JSON.parse(categoriasJson); 
-        alert("Carreguei as categorias"); 
-
       }
     })
     .catch(() =>{
-      alert("Erro não carreguei as categorias");
     }); 
   }
 

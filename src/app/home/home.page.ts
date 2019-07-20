@@ -142,12 +142,9 @@ export class HomePage {
     .then(categoriasJson => {
       if (categoriasJson != null) {
         this.categorias = JSON.parse(categoriasJson); 
-        alert('Carregando Categorias: '+this.categorias.length); 
-
       }
     })
     .catch(() =>{
-      console.log("home page "+this.categorias.length)
     }); 
   }
 
@@ -158,23 +155,19 @@ export class HomePage {
     .then(configJson => {
       if (configJson != null) {
         this.configApp = JSON.parse(configJson); 
-        alert('Encontrei o config: idCategoria: '+this.configApp.idCategoria); 
       }
     })
     .catch(() =>{
-      alert('Não encontrei o config'); 
     }); 
   }
 
   updateConfig() {
     this.nativeStorage.setItem('config',JSON.stringify(this.configApp)); 
-    alert('Salvando o config'); 
   }
 
   updateNativeStorageCategoria() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))
     .then((e)=>{
-      alert('Salvado categoria');
       this.updateConfig(); 
     })
     .catch((e)=>{

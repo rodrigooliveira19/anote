@@ -13,20 +13,9 @@
     <ion-card *ngFor="let categoria of categorias | filtro: tituloCor" color={{categoria.cor}}
       (click)="addAnotacao(categoria)">
       <ion-card-content>
-        <ion-card-title><strong>{{categoria.titulo}}</strong></ion-card-title>
+        <ion-card-title>{{categoria.titulo}}</ion-card-title>
       </ion-card-content>
     </ion-card>
-    <!--<ion-item-sliding *ngFor="let categoria of categorias | filtro: tituloCor">
-      <ion-item color={{categoria.cor}}>
-        <ion-label><strong>{{categoria.titulo}}</strong></ion-label>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="excluirCategoria(categoria)">Excluir
-        </ion-item-option>
-        <ion-item-option color="success" (click)="addAnotacao('anotacao-cad')">Add Anotação</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>-->
   </ion-list>
 </ion-content>
 
@@ -38,11 +27,3 @@
   </ion-fab>
 </ion-footer>
 
-<!--<ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor" color={{anotacao.cor}}>
-    <ion-card-content>
-      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
-      <ion-label>{{anotacao.descricao}}</ion-label>
-    </ion-card-content>
-  </ion-card>-->
-
-<!--(click)="adicionarAnotacao('anotacao-cad')"-->

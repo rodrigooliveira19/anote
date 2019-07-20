@@ -1,8 +1,11 @@
+import { async } from '@angular/core/testing';
 import { Anotacao } from './../model/anotacao';
 import { Component, OnInit } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ToastController, NavController, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import {TextToSpeech} from '@ionic-native/text-to-speech/ngx'; 
+import { delay } from 'q';
 
 @Component({
   selector: 'app-anotacao-cad',
@@ -14,37 +17,36 @@ export class AnotacaoCadPage implements OnInit {
   private titulo: string; 
   private descricao: string; 
   private cor: string; 
+  private atualizar:boolean = false; 
 
   private tituloCor: string = "";
   private index: number; 
   private indexAnotacao: number; 
+  private auxIndexAnotacao: string; 
   private idCategoria: number; 
   private corDominante: string; 
 
-  private anotacoes: any[] = [];
   private categorias: any[] = []; 
+
+  private lerTituloDescricao : boolean = true; 
 
 
   constructor(private activRoute: ActivatedRoute,
               private nativeStorage: NativeStorage, 
               private toastCtrl: ToastController, 
               private alertCtrl: AlertController, 
-              private navCtrl: NavController) { }
+              private navCtrl: NavController, 
+              private tts: TextToSpeech) { }
 
   ngOnInit() {
-    /*
-    this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante'); 
-    this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id')); 
-    this.index = Number(this.activRoute.snapshot.paramMap.get('index')); 
-    this.indexAnotacao = Number(this.activRoute.snapshot.paramMap.get('indexAnotacao')); 
-    this.loadingCategorias(); */
   }
 
   ionViewWillEnter() {
     this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante'); 
     this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id')); 
     this.index = Number(this.activRoute.snapshot.paramMap.get('index')); 
-    this.indexAnotacao = Number(this.activRoute.snapshot.paramMap.get('indexAnotacao')); 
+    this.auxIndexAnotacao = this.activRoute.snapshot.paramMap.get('indexAnotacao'); 
+    this.cor = this.corDominante; 
     this.loadingCategorias(); 
   }
 
@@ -77,8 +79,13 @@ export class AnotacaoCadPage implements OnInit {
 
   async salvar(){
     if (this.validar() === 1) {
-      this.addQuebraDeLinha(this.descricao); 
-      this.add(); 
+      if (this.indexAnotacao >= 0){
+        this.categorias[this.index].anotacao[this.indexAnotacao].titulo = this.titulo; 
+        this.categorias[this.index].anotacao[this.indexAnotacao].descricao = this.descricao; 
+        alert('Atualizei anotação: '+this.indexAnotacao); 
+      }else {
+        this.add(); 
+      }
       this.updateNativeStorage(); 
     }else {
       let toast = await this.toastCtrl.create({
@@ -109,39 +116,19 @@ export class AnotacaoCadPage implements OnInit {
         let dt = new Date(); 
         let data = dt.getDate() +'/'+(dt.getMonth()+1) +'/'+ dt.getFullYear(); 
         let hora = dt.getHours()+':'+ dt.getMinutes()+':'+dt.getSeconds(); 
-        let dataHora = 'Data: '+data +' '+ hora; 
-
-        anotacao.data = dataHora; 
+    
+        anotacao.data =' '+data; 
+        anotacao.hora =' '+ hora; 
 
         let size = this.categorias[this.index].anotacao.lenght; 
         this.categorias[this.index].anotacao.push(anotacao);
-        if((size + 1) == this.categorias[this.index].anotacao.lenght) {
-          alert('Anotação adicionada na categoria id: '+this.categorias[this.index].id + 'size: '
-          +this.categorias[this.index].anotacao.lenght); 
-        }
-        
     }
   }
 
-  addQuebraDeLinha(descricao:string) {
-    let novaString : string = " "; 
-    for (let index = 0; index < descricao.length; index++) {
-      novaString+=descricao[index]; 
-      if(descricao[index]===" ") {
-        novaString+=descricao[index]; 
-        if(descricao[index +1]===" " && descricao[index +2]!=" ") {
-          novaString+="\n";
-          alert('Inserir quebra de linha');  
-        }
-      }
-    }
-    this.descricao = novaString; 
-  }
 
   updateNativeStorage() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))
     .then(()=>{
-      this.loadingCategorias(); 
       this.navCtrl.navigateForward(['anotacao-list',this.corDominante,this.idCategoria,this.index]);
     })
     .catch(); 
@@ -149,15 +136,14 @@ export class AnotacaoCadPage implements OnInit {
 
   buscar(ev: any) {
     this.tituloCor = ev.detail.value; 
-    console.log(this.tituloCor); 
   }
 
-  loadingCategorias() {
+  async loadingCategorias() {
     this.nativeStorage.getItem('categorias')
     .then(categoriasJson => {
       if (categoriasJson != null) {
         this.categorias = JSON.parse(categoriasJson); 
-        alert("carreguei as categorias"); 
+        this.isEditar(); 
       }
     })
     .catch(() =>{
@@ -192,5 +178,43 @@ export class AnotacaoCadPage implements OnInit {
     await alert.present(); 
   }
 
+  async isEditar() {
+    if ((this.auxIndexAnotacao) || this.auxIndexAnotacao == '0') {
+      this.indexAnotacao = Number(this.auxIndexAnotacao); 
+      this.titulo = this.categorias[this.index].anotacao[this.indexAnotacao].titulo; 
+      this.descricao = this.categorias[this.index].anotacao[this.indexAnotacao].descricao;
+      this.atualizar = true;  
+    }else {
+      
+    }
+  }
+
+
+  async lerAnotacao() {
+    if ((this.titulo) || (this.descricao) ){
+      let tituloDesc: string = "Titulo "+this.titulo+" descrição. "+this.descricao; 
+      this.lerAnotacaoString(tituloDesc);
+    }else {
+      /*let toast = await this.toastCtrl.create({
+        message :'Cadastrar Título e descrição',
+        duration: 1500, 
+        color: this.corDominante, 
+        position : 'top'
+      }); 
+      await toast.present(); */
+      alert('Cadastrar Título e descrição'); 
+    }
+
+  }
+
+  async lerAnotacaoString(texto: string) {
+    this.tts.speak({
+      text: texto, 
+      rate: 1, 
+      locale: 'pt-BR'
+    })
+    .then()
+    .catch(); 
+  }
 
 }

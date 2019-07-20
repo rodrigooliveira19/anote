@@ -8,8 +8,11 @@
       <ion-label slot="end" (click)="excluirAnotacao()">
         <ion-icon name="trash" size="large" color={{this.corDominante}}></ion-icon>
       </ion-label>
+      <ion-label slot="end" (click)="lerAnotacao()">
+        <ion-icon name="megaphone" size="large" color={{this.corDominante}}></ion-icon>
+      </ion-label>
       <ion-label slot="end">
-        <ion-icon name="barcode" size="large" color={{this.corDominante}}></ion-icon>
+        <ion-icon name="mic" size="large" color={{this.corDominante}}></ion-icon>
       </ion-label>
       <ion-label slot="end">
         <ion-icon name="camera" size="large" color={{this.corDominante}}></ion-icon>
@@ -38,28 +41,34 @@
 
   <ion-item>
     <ion-label position="floating">Título</ion-label>
-    <ion-input [(ngModel)]="this.titulo"></ion-input>
+    <!--<ion-input *ngIf="!this.atualizar" [(ngModel)]="this.titulo"></ion-input>-->
+    <ion-input   [(ngModel)]="this.titulo" value="{{titulo}}"></ion-input>
+
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Descrição</ion-label>
-    <ion-textarea [(ngModel)]="this.descricao" rows="17" cols="20"></ion-textarea>
+    <!--<ion-textarea *ngIf="!this.atualizar" [(ngModel)]="this.descricao" rows="17" cols="20"></ion-textarea>-->
+    <ion-textarea  rows="17" cols="20" [(ngModel)]="this.descricao"
+     value="{{descricao}}"
+      ></ion-textarea>
   </ion-item>
   Index: {{this.index}}<br />
   CategoriaId:{{this.idCategoria}}
 
   <!--<ion-button expand="block" (click)="salvar()" size="large">Salvar</ion-button>-->
 
-  <!--
-    <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" debounce=260></ion-searchbar>
-
-  <ion-card *ngFor="let anotacao of anotacoes | filtro: tituloCor"  color={{anotacao.cor}}>
-    <ion-card-content >
-      <ion-card-title>{{anotacao.titulo}}</ion-card-title>
-      <ion-label>{{anotacao.descricao}}</ion-label>
-    </ion-card-content>
-  </ion-card>
-  -->
+  <!--<ion-list>
+    <ion-card *ngFor="let anotacao of this.categorias[this.index].anotacao | filtro: tituloCor" color={{anotacao.cor}}
+     >
+      <ion-card-content>
+        <ion-card-title>{{anotacao.titulo}}</ion-card-title>
+        {{anotacao.descricao}}
+        <br/>
+        <ion-icon name="calendar">{{anotacao.data}}</ion-icon>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>-->
 
 
 

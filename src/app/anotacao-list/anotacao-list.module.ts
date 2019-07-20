@@ -23,6 +23,7 @@ const routes: Routes = [
     PipesModule, 
     RouterModule.forChild(routes)
   ],
-  declarations: [AnotacaoListPage]
+  declarations: [AnotacaoListPage], 
+
 })
 export class AnotacaoListPageModule {}

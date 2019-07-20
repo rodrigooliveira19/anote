@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { PipesModule } from './pipes/pipes.module';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { PipesModule } from './pipes/pipes.module';
   providers: [
     StatusBar,
     SplashScreen,
+    TextToSpeech, 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, 
     NativeStorage
   ],
