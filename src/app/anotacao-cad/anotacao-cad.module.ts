@@ -1,3 +1,5 @@
+import { Media } from '@ionic-native/media/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +9,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AnotacaoCadPage } from './anotacao-cad.page';
 import { PipesModule } from '../pipes/pipes.module';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+
 
 const routes: Routes = [
   {
@@ -23,6 +27,10 @@ const routes: Routes = [
     PipesModule, 
     RouterModule.forChild(routes)
   ],
+  providers: [
+    MediaCapture, 
+    Media, 
+    File], 
   declarations: [AnotacaoCadPage]
 })
 export class AnotacaoCadPageModule {}

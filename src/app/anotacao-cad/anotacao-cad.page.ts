@@ -6,6 +6,9 @@ import { ToastController, NavController, AlertController } from '@ionic/angular'
 import { ActivatedRoute } from '@angular/router';
 import {TextToSpeech} from '@ionic-native/text-to-speech/ngx'; 
 import { delay } from 'q';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-anotacao-cad',
@@ -27,8 +30,8 @@ export class AnotacaoCadPage implements OnInit {
   private corDominante: string; 
 
   private categorias: any[] = []; 
-
-  private lerTituloDescricao : boolean = true; 
+  private audios: any[] = []; 
+  private anotacao: any; 
 
 
   constructor(private activRoute: ActivatedRoute,
@@ -36,7 +39,10 @@ export class AnotacaoCadPage implements OnInit {
               private toastCtrl: ToastController, 
               private alertCtrl: AlertController, 
               private navCtrl: NavController, 
-              private tts: TextToSpeech) { }
+              private tts: TextToSpeech, 
+              private mediaCapture: MediaCapture, 
+              private media: Media, 
+              private file: File) { }
 
   ngOnInit() {
   }
@@ -48,6 +54,7 @@ export class AnotacaoCadPage implements OnInit {
     this.auxIndexAnotacao = this.activRoute.snapshot.paramMap.get('indexAnotacao'); 
     this.cor = this.corDominante; 
     this.loadingCategorias(); 
+    this.anotacao = new Anotacao(); 
   }
 
   async corAnotacao(cor: string) {
@@ -71,7 +78,7 @@ export class AnotacaoCadPage implements OnInit {
     }
     const toast = await this.toastCtrl.create({
       message: 'Card '+cor+' selecionado',
-      duration: 1500,
+      duration: 1200,
       position: 'top'
     });
     toast.present();
@@ -87,6 +94,7 @@ export class AnotacaoCadPage implements OnInit {
         this.add(); 
       }
       this.updateNativeStorage(); 
+      this.navegar(); 
     }else {
       let toast = await this.toastCtrl.create({
         message :'Cadastrar Título e descrição',
@@ -108,20 +116,19 @@ export class AnotacaoCadPage implements OnInit {
 
   add() {
     if (this.titulo.trim().length > 0  && this.descricao.trim().length > 0) {
-        let anotacao = new Anotacao(); 
-        anotacao.titulo = this.titulo; 
-        anotacao.descricao = this.descricao; 
-        anotacao.cor = this.cor; 
+        this.anotacao.titulo = this.titulo; 
+        this.anotacao.descricao = this.descricao; 
+        this.anotacao.cor = this.cor; 
 
         let dt = new Date(); 
         let data = dt.getDate() +'/'+(dt.getMonth()+1) +'/'+ dt.getFullYear(); 
         let hora = dt.getHours()+':'+ dt.getMinutes()+':'+dt.getSeconds(); 
     
-        anotacao.data =' '+data; 
-        anotacao.hora =' '+ hora; 
+        this.anotacao.data =' '+data; 
+        this.anotacao.hora =' '+ hora; 
 
         let size = this.categorias[this.index].anotacao.lenght; 
-        this.categorias[this.index].anotacao.push(anotacao);
+        this.categorias[this.index].anotacao.push(this.anotacao);
     }
   }
 
@@ -129,9 +136,12 @@ export class AnotacaoCadPage implements OnInit {
   updateNativeStorage() {
     this.nativeStorage.setItem('categorias',JSON.stringify(this.categorias))
     .then(()=>{
-      this.navCtrl.navigateForward(['anotacao-list',this.corDominante,this.idCategoria,this.index]);
     })
     .catch(); 
+  }
+
+  navegar() {
+    this.navCtrl.navigateForward(['anotacao-list',this.corDominante,this.idCategoria,this.index]);
   }
 
   buscar(ev: any) {
@@ -154,7 +164,7 @@ export class AnotacaoCadPage implements OnInit {
   async excluirAnotacao(){
     let alert = await this.alertCtrl.create({
       header: 'Confirmação', 
-      message: 'Excluir a anotacao '+ this.categorias[this.index].anotacao[this.indexAnotacao].titulo + ' ?',
+      message: 'Excluir a anotacao: '+ this.categorias[this.index].anotacao[this.indexAnotacao].titulo + ' ?',
       buttons:[
         {
           text:'Cancelar', 
@@ -170,6 +180,7 @@ export class AnotacaoCadPage implements OnInit {
           handler: ()=>{
             this.categorias[this.index].anotacao.splice(this.indexAnotacao, 1);
             this.updateNativeStorage(); 
+            this.navegar(); 
           }
         }
       ]
@@ -184,6 +195,7 @@ export class AnotacaoCadPage implements OnInit {
       this.titulo = this.categorias[this.index].anotacao[this.indexAnotacao].titulo; 
       this.descricao = this.categorias[this.index].anotacao[this.indexAnotacao].descricao;
       this.atualizar = true;  
+      this.audios = this.categorias[this.index].anotacao[this.indexAnotacao].audios; 
     }else {
       
     }
@@ -215,6 +227,55 @@ export class AnotacaoCadPage implements OnInit {
     })
     .then()
     .catch(); 
+  }
+
+  play(myFile : any) {
+    if (myFile.name.indexOf('.3gpp') > -1) {
+      const audioFile: MediaObject = this.media.create(myFile.localURL); 
+      audioFile.play(); 
+    }
+  }
+
+  captureAudio() {
+    this.mediaCapture.captureAudio()
+    .then((res)=> {
+      if (res) {
+        this.audios = this.audios.concat(res); 
+
+        if (this.indexAnotacao >= 0) {
+          this.categorias[this.index].anotacao[this.indexAnotacao].audios = this.audios; 
+        }else {
+          this.anotacao.audios = this.anotacao.audios.concat(this.audios); 
+        }
+        
+      }
+    })
+    .catch(); 
+  }
+
+
+  async captureImageVideo() {
+    let alert = await this.alertCtrl.create({
+      header: 'Imagem ou Vídeo ?', 
+      buttons: [
+        {
+          text: 'Vídeo', 
+          cssClass: this.corDominante, 
+          handler: () =>{
+
+          }
+        },
+        {
+          text: 'Imagem', 
+          cssClass: this.corDominante, 
+          handler: () =>{
+
+          }
+        }
+      ]
+    }); 
+
+    await alert.present(); 
   }
 
 }

@@ -6,10 +6,18 @@ div.corAnotcao {
     }
 }
 
+
+div.corAnotcao2 {
+    text-align-last: left;
+    ion-button {
+        margin: 0.5px; 
+    }
+}
+
 div.spaceButtons {
     text-align-last: right; 
     
-    ion-label {
-        margin: 10px; 
+    ion-button {
+        margin: 1px; 
     }
 }

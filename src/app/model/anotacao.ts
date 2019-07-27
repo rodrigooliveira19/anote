@@ -6,6 +6,6 @@ export class Anotacao {
     public data: string; 
     public hora: string; 
     public fotos: string[]; 
-    public audios: string[]; 
+    public audios: any[] = []; 
 
 }

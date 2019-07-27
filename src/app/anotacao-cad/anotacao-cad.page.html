@@ -4,23 +4,23 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <div class="spaceButtons">
-      <ion-label slot="end" (click)="excluirAnotacao()">
-        <ion-icon name="trash" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-label>
-      <ion-label slot="end" (click)="lerAnotacao()">
+  
+      <ion-button fill= "outiline" slot="end" (click)="excluirAnotacao()" size="small">
+        <ion-icon fill= "outiline" name="trash" size="large" color={{this.corDominante}}></ion-icon>
+      </ion-button>
+      <ion-button fill= "outiline"  slot="end" (click)="lerAnotacao()" size="small">
         <ion-icon name="megaphone" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-label>
-      <ion-label slot="end">
+      </ion-button >
+      <ion-button fill= "outiline" slot="end" size="small" (click)="captureAudio()">
         <ion-icon name="mic" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-label>
-      <ion-label slot="end">
-        <ion-icon name="camera" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-label>
-      <ion-label slot="end" (click)="salvar()">
+      </ion-button>
+      <ion-button fill= "outiline" slot="end" size="small" (click)="captureImageVideo()">
+        <ion-icon name="camera" size="large" color={{this.corDominante}} ></ion-icon>
+      </ion-button>
+      <ion-button fill= "outiline" slot="end" (click)="salvar()" size="small">
         <ion-icon name="save" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-label>
-    </div>
+      </ion-button>
+    
 
 
 
@@ -41,34 +41,24 @@
 
   <ion-item>
     <ion-label position="floating">Título</ion-label>
-    <!--<ion-input *ngIf="!this.atualizar" [(ngModel)]="this.titulo"></ion-input>-->
     <ion-input   [(ngModel)]="this.titulo" value="{{titulo}}"></ion-input>
-
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Descrição</ion-label>
-    <!--<ion-textarea *ngIf="!this.atualizar" [(ngModel)]="this.descricao" rows="17" cols="20"></ion-textarea>-->
-    <ion-textarea  rows="17" cols="20" [(ngModel)]="this.descricao"
-     value="{{descricao}}"
-      ></ion-textarea>
+    <ion-textarea  rows="17" cols="20" [(ngModel)]="this.descricao" value="{{descricao}}"
+    ></ion-textarea>
   </ion-item>
-  Index: {{this.index}}<br />
-  CategoriaId:{{this.idCategoria}}
+  
+  <ion-list>
+    <ion-label><strong>Áudios</strong></ion-label>
+    <ion-item *ngFor="let file of audios" tappable (click)="play(file)" text-wrap>
+      {{ file.name }}
+      <p>{{ file.size / 1000 / 1000 | number }} MB</p>
+    </ion-item>
+  </ion-list>
 
-  <!--<ion-button expand="block" (click)="salvar()" size="large">Salvar</ion-button>-->
 
-  <!--<ion-list>
-    <ion-card *ngFor="let anotacao of this.categorias[this.index].anotacao | filtro: tituloCor" color={{anotacao.cor}}
-     >
-      <ion-card-content>
-        <ion-card-title>{{anotacao.titulo}}</ion-card-title>
-        {{anotacao.descricao}}
-        <br/>
-        <ion-icon name="calendar">{{anotacao.data}}</ion-icon>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>-->
 
 
 
