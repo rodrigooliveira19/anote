@@ -33,6 +33,9 @@ export class AnotacaoCadPage implements OnInit {
   private audios: any[] = []; 
   private anotacao: any; 
 
+  private audioFile: MediaObject; 
+  private playAudio: boolean = true; 
+
 
   constructor(private activRoute: ActivatedRoute,
               private nativeStorage: NativeStorage, 
@@ -231,8 +234,17 @@ export class AnotacaoCadPage implements OnInit {
 
   play(myFile : any) {
     if (myFile.name.indexOf('.3gpp') > -1) {
-      const audioFile: MediaObject = this.media.create(myFile.localURL); 
-      audioFile.play(); 
+      if (this.playAudio) {
+        this.audioFile = this.media.create(myFile.localURL); 
+        this.audioFile.play();
+        //myFile.playAudio = false; 
+        this.playAudio = false;  
+      }else {
+        this.audioFile.pause(); 
+        this.audioFile.stop(); 
+        //myFile.playAudio = true; 
+        this.playAudio = true; 
+      }
     }
   }
 
@@ -240,10 +252,13 @@ export class AnotacaoCadPage implements OnInit {
     this.mediaCapture.captureAudio()
     .then((res)=> {
       if (res) {
+        //let objAudio = {audio: res,playAudio: true}; 
+
         this.audios = this.audios.concat(res); 
+        //this.audios = this.audios.concat(objAudio); 
 
         if (this.indexAnotacao >= 0) {
-          this.categorias[this.index].anotacao[this.indexAnotacao].audios = this.audios; 
+          this.categorias[this.index].anotacao[this.indexAnotacao].audios = this.audios;
         }else {
           this.anotacao.audios = this.anotacao.audios.concat(this.audios); 
         }
