@@ -13,7 +13,6 @@ import { ActivatedRoute } from '@angular/router';
 export class AnotacaoListPage implements OnInit {
 
   private categorias: any[] = [];
-  //private anotacoes: any[] = [];
   private tituloCor: string ="";
 
   private corDominante: string;

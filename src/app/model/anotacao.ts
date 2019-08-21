@@ -5,7 +5,8 @@ export class Anotacao {
     public cor: string = "success";
     public data: string; 
     public hora: string; 
-    public fotos: string[]; 
+    public fotos: any[] = []; 
     public audios: any[] = []; 
+    public videos: any[] = []; 
 
 }

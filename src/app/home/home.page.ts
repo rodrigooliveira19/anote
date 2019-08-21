@@ -36,7 +36,7 @@ export class HomePage {
     this.tituloCor = ev.detail.value;  
   }
 
-  //namePage: string
+
   addAnotacao(categoria: Categoria) {
     let id = categoria.id; 
     let index = this.findIndex(id); 

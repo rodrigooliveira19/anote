@@ -10,6 +10,7 @@ import { IonicModule } from '@ionic/angular';
 import { AnotacaoCadPage } from './anotacao-cad.page';
 import { PipesModule } from '../pipes/pipes.module';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   ],
   providers: [
     MediaCapture, 
+    Camera, 
     Media, 
     File], 
   declarations: [AnotacaoCadPage]

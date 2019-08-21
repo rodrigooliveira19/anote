@@ -4,23 +4,23 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-  
-      <ion-button fill= "outiline" slot="end" (click)="excluirAnotacao()" size="small">
-        <ion-icon fill= "outiline" name="trash" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-button>
-      <ion-button fill= "outiline"  slot="end" (click)="lerAnotacao()" size="small">
-        <ion-icon name="megaphone" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-button >
-      <ion-button fill= "outiline" slot="end" size="small" (click)="captureAudio()">
-        <ion-icon name="mic" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-button>
-      <ion-button fill= "outiline" slot="end" size="small" (click)="captureImageVideo()">
-        <ion-icon name="camera" size="large" color={{this.corDominante}} ></ion-icon>
-      </ion-button>
-      <ion-button fill= "outiline" slot="end" (click)="salvar()" size="small">
-        <ion-icon name="save" size="large" color={{this.corDominante}}></ion-icon>
-      </ion-button>
-    
+
+    <ion-button fill="outiline" slot="end" (click)="excluirAnotacao()" size="small">
+      <ion-icon fill="outiline" name="trash" size="large" color={{this.corDominante}}></ion-icon>
+    </ion-button>
+    <ion-button fill="outiline" slot="end" (click)="lerAnotacao()" size="small">
+      <ion-icon name="megaphone" size="large" color={{this.corDominante}}></ion-icon>
+    </ion-button>
+    <ion-button fill="outiline" slot="end" size="small" (click)="captureAudio()">
+      <ion-icon name="mic" size="large" color={{this.corDominante}}></ion-icon>
+    </ion-button>
+    <ion-button fill="outiline" slot="end" size="small" (click)="createImagem()">
+      <ion-icon name="camera" size="large" color={{this.corDominante}}></ion-icon>
+    </ion-button>
+    <ion-button fill="outiline" slot="end" (click)="salvar()" size="small">
+      <ion-icon name="save" size="large" color={{this.corDominante}}></ion-icon>
+    </ion-button>
+
 
 
 
@@ -41,29 +41,30 @@
 
   <ion-item>
     <ion-label position="floating">Título</ion-label>
-    <ion-input   [(ngModel)]="this.titulo" value="{{titulo}}"></ion-input>
+    <ion-input [(ngModel)]="this.titulo" value="{{titulo}}"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Descrição</ion-label>
-    <ion-textarea  rows="17" cols="20" [(ngModel)]="this.descricao" value="{{descricao}}"
-    ></ion-textarea>
+    <ion-textarea rows="15" cols="20" [(ngModel)]="this.descricao" value="{{descricao}}"></ion-textarea>
   </ion-item>
-  
+
   <ion-list>
-    <ion-label><strong>Áudios</strong></ion-label>
-    <ion-item *ngFor="let file of audios" tappable (click)="play(file)"  text-wrap>
+    <!--<ion-label><strong>Áudios</strong></ion-label>-->
+    <ion-badge color={{this.corDominante}}>Áudios</ion-badge>
+    <ion-item *ngFor="let file of audios" tappable (click)="play(file)" text-wrap>
       {{ file.name }}
-      <!--<p>{{ file.size / 1000 / 1000 | number }} MB</p>-->
-      <!--<ion-item >
-        <ion-icon *ngIf="file.playAudio" name="play"></ion-icon>
-        <ion-icon *ngIf="!file.playAudio" name="pause"></ion-icon>
-      </ion-item>-->
     </ion-item>
   </ion-list>
 
-
-
-
+  <ion-list>
+    <!--<ion-label><strong>Imagens</strong></ion-label>-->
+    <ion-badge color={{this.corDominante}}>Imagens</ion-badge>
+    <ion-item *ngFor="let foto of fotos">
+      <ion-card *ngIf="foto">
+        <img src="{{foto}}">
+      </ion-card>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
