@@ -40,12 +40,12 @@
   </div>
 
   <ion-item>
-    <ion-label position="floating">Título</ion-label>
+    <ion-label position="floating" color={{this.corDominante}}>Título</ion-label>
     <ion-input [(ngModel)]="this.titulo" value="{{titulo}}"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Descrição</ion-label>
+    <ion-label position="floating" color={{this.corDominante}}>Descrição</ion-label>
     <ion-textarea rows="15" cols="20" [(ngModel)]="this.descricao" value="{{descricao}}"></ion-textarea>
   </ion-item>
 

@@ -3,9 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-item (click)="updateConfig()" slot="end">
+    <ion-button (click)="updateConfig()" fill="outiline" slot="end">
       <ion-icon name="save" color={{this.configApp.corDominante}}></ion-icon>
-    </ion-item>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
         <ion-radio color="secondary" (click)="setCorDominante('secondary')"></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Azul</ion-label>
+        <ion-label>Azul Escuro</ion-label>
         <ion-radio color="primary" (click)="setCorDominante('primary')"></ion-radio>
       </ion-item>
       <ion-item>
