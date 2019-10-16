@@ -52,16 +52,16 @@ export class AnotacaoCadPage implements OnInit {
     private file: File) { }
 
   ngOnInit() {
-  }
-
-  ionViewWillEnter() {
     this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante');
     this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id'));
     this.index = Number(this.activRoute.snapshot.paramMap.get('index'));
     this.auxIndexAnotacao = this.activRoute.snapshot.paramMap.get('indexAnotacao');
     this.cor = this.corDominante;
-    this.loadingCategorias();
     this.anotacao = new Anotacao();
+  }
+
+  ionViewWillEnter() {
+    this.loadingCategorias();
   }
 
   async corAnotacao(cor: string) {

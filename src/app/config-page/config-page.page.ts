@@ -17,6 +17,7 @@ export class ConfigPagePage implements OnInit {
               private toastCtrl: ToastController) { }
 
   ngOnInit() {
+    this.configApp = new ConfigApp(); 
     this.loadingConfigApp(); 
     
   }
@@ -31,7 +32,6 @@ export class ConfigPagePage implements OnInit {
   }
 
   loadingConfigApp() {
-    this.configApp = new ConfigApp(); 
     this.nativeStorage.getItem('config')
     .then(config => {
       if (config != null ) {
