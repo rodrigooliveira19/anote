@@ -24,8 +24,7 @@ export class HomePage {
               private alertCtrl: AlertController, 
               private toastCtrl: ToastController) {}
 
-  ngOnInit() {
-    this.configApp = new ConfigApp(); 
+  ngOnInit() { 
   }
 
   ionViewWillEnter(){
@@ -151,6 +150,7 @@ export class HomePage {
 
 
   loadingConfigApp() {
+    this.configApp = new ConfigApp();
     this.nativeStorage.getItem('config')
     .then(configJson => {
       if (configJson != null) {
