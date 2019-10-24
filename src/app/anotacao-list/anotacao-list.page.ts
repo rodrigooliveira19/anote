@@ -19,6 +19,8 @@ export class AnotacaoListPage implements OnInit {
   private index: number; 
   private idCategoria: number; 
 
+  private sizeBoolean: boolean = false; 
+
   constructor(private activRoute: ActivatedRoute,
               private navCtrl: NavController,
               private nativeStorage: NativeStorage, 
@@ -28,10 +30,13 @@ export class AnotacaoListPage implements OnInit {
     this.corDominante = this.activRoute.snapshot.paramMap.get('corDominante'); 
     this.index = Number(this.activRoute.snapshot.paramMap.get('index')); 
     this.idCategoria = Number(this.activRoute.snapshot.paramMap.get('id')); 
+
+    this.loadingCategorias(); 
   }
 
   ionViewWillEnter(){
     this.loadingCategorias(); 
+    
   }
 
   buscar(ev: any) {
@@ -56,7 +61,13 @@ export class AnotacaoListPage implements OnInit {
     this.nativeStorage.getItem('categorias')
     .then(categoriasJson => {
       if (categoriasJson != null) {
-        this.categorias = JSON.parse(categoriasJson); 
+        this.categorias = JSON.parse(categoriasJson);
+        
+        if (this.categorias.length > 0) {
+          this.sizeBoolean = true; 
+        }else {
+          this.sizeBoolean = false;
+        }
       }
     })
     .catch(() =>{

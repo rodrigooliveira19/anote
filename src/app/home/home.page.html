@@ -1,9 +1,9 @@
 <ion-header>
   <ion-item>
-    <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" debounce=260 color={{this.configApp.corDominante}}>
+    <ion-searchbar placeholder="Buscar" (ionChange)="buscar($event)" debounce=260 color={{configApp.corDominante}} >
     </ion-searchbar>
-    <ion-button fill= "outiline"(click)="abrirConfig($event)">
-        <ion-icon name="more" color={{this.configApp.corDominante}} size="large"></ion-icon>
+    <ion-button fill= "outiline"(click)="abrirConfig()">
+        <ion-icon name="more" color={{configApp.corDominante}} size="large"></ion-icon>
     </ion-button>
   </ion-item>
 </ion-header>
@@ -21,7 +21,7 @@
 
 <ion-footer>
   <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button size="small" (click)="newCategoria()" color={{this.configApp.corDominante}}>
+    <ion-fab-button size="small" (click)="newCategoria()" color={{configApp.corDominante}}>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

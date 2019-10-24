@@ -25,6 +25,8 @@ export class HomePage {
               private toastCtrl: ToastController) {}
 
   ngOnInit() {
+    this.loadingConfigApp(); 
+    this.loadingCategorias(); 
   }
 
   ionViewWillEnter(){
@@ -40,6 +42,7 @@ export class HomePage {
   addAnotacao(categoria: Categoria) {
     let id = categoria.id; 
     let index = this.findIndex(id); 
+    console.log("AddAnotação: id: "+id + "index: "+index); 
     if (index > -1) {
       this.navCtrl.navigateForward(['/anotacao-list',this.configApp.corDominante,id,index]);
     }
@@ -116,9 +119,10 @@ export class HomePage {
 
   }
 
-  async abrirConfig(ev: any) {
+  async abrirConfig() {
     this.navCtrl.navigateForward('/config-page'); 
     /*
+    ev: any
     let popover = await this.popoverCtrl.create({
       component: ComponenteConfigComponent, 
       event: ev
@@ -138,6 +142,7 @@ export class HomePage {
   }
 
   loadingCategorias() {
+    console.log("Entrei no loadingCategorias"); 
     this.nativeStorage.getItem('categorias')
     .then(categoriasJson => {
       if (categoriasJson != null) {
@@ -149,8 +154,10 @@ export class HomePage {
   }
 
 
-  loadingConfigApp() {
+  async loadingConfigApp() {
+    console.log("Entrei no loadingConfigApp"); 
     this.configApp = new ConfigApp(); 
+    console.log("corDominante: "+this.configApp.corDominante); 
     this.nativeStorage.getItem('config')
     .then(configJson => {
       if (configJson != null) {
