@@ -42,7 +42,7 @@ export class HomePage {
   addAnotacao(categoria: Categoria) {
     let id = categoria.id; 
     let index = this.findIndex(id); 
-    console.log("AddAnotação: id: "+id + "index: "+index); 
+    
     if (index > -1) {
       this.navCtrl.navigateForward(['/anotacao-list',this.configApp.corDominante,id,index]);
     }
@@ -51,9 +51,8 @@ export class HomePage {
 
   private findIndex(id:number) {
     for (let index = 0; index < this.categorias.length; index++) {
-      console.log('não'); 
+      
       if (id === this.categorias[index].id) {
-        console.log('sim'); 
         return index; 
       }
     }
@@ -142,7 +141,6 @@ export class HomePage {
   }
 
   loadingCategorias() {
-    console.log("Entrei no loadingCategorias"); 
     this.nativeStorage.getItem('categorias')
     .then(categoriasJson => {
       if (categoriasJson != null) {
@@ -154,10 +152,9 @@ export class HomePage {
   }
 
 
-  async loadingConfigApp() {
-    console.log("Entrei no loadingConfigApp"); 
+  async loadingConfigApp() { 
     this.configApp = new ConfigApp(); 
-    console.log("corDominante: "+this.configApp.corDominante); 
+    
     this.nativeStorage.getItem('config')
     .then(configJson => {
       if (configJson != null) {
