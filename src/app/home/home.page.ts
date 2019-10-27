@@ -12,11 +12,11 @@ import { Categoria } from '../model/categoria';
 })
 export class HomePage {
 
-  private tituloCor: string ="";
-  private configApp: any; 
+  public tituloCor: string ="";
+  public configApp: any; 
   
-  private anotacoes: any[] = [];
-  private categorias: any[] = [];
+  public anotacoes: any[] = [];
+  public categorias: any[] = [];
 
   constructor(private nativeStorage: NativeStorage, 
               private navCtrl: NavController, 

@@ -12,14 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AnotacaoListPage implements OnInit {
 
-  private categorias: any[] = [];
-  private tituloCor: string ="";
+  public categorias: any[] = [];
+  public tituloCor: string ="";
 
-  private corDominante: string;
-  private index: number; 
-  private idCategoria: number; 
+  public corDominante: string;
+  public index: number; 
+  public idCategoria: number; 
 
-  private sizeBoolean: boolean = false; 
+  public sizeBoolean: boolean = false; 
 
   constructor(private activRoute: ActivatedRoute,
               private navCtrl: NavController,

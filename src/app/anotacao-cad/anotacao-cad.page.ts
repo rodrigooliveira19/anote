@@ -17,27 +17,27 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class AnotacaoCadPage implements OnInit {
 
-  private titulo: string;
-  private descricao: string;
-  private cor: string;
-  private atualizar: boolean = false;
+  public titulo: string;
+  public descricao: string;
+  public cor: string;
+  public atualizar: boolean = false;
 
-  private tituloCor: string = "";
-  private index: number;
-  private indexAnotacao: number;
-  private auxIndexAnotacao: string;
-  private idCategoria: number;
-  private corDominante: string;
+  public tituloCor: string = "";
+  public index: number;
+  public indexAnotacao: number;
+  public auxIndexAnotacao: string;
+  public idCategoria: number;
+  public corDominante: string;
 
-  private categorias: any[] = [];
-  private anotacao: any;
-  private audios: any[] = [];
-  private fotos: any = [];
+  public categorias: any[] = [];
+  public anotacao: any;
+  public audios: any[] = [];
+  public fotos: any = [];
 
-  private foto: string = "";
+  public foto: string = "";
 
-  private audioFile: MediaObject;
-  private playAudio: boolean = true;
+  public audioFile: MediaObject;
+  public playAudio: boolean = true;
 
 
   constructor(private activRoute: ActivatedRoute,
@@ -98,7 +98,6 @@ export class AnotacaoCadPage implements OnInit {
       if (this.indexAnotacao >= 0) {
         this.categorias[this.index].anotacao[this.indexAnotacao].titulo = this.titulo;
         this.categorias[this.index].anotacao[this.indexAnotacao].descricao = this.descricao;
-        alert('Atualizei anotação: ' + this.indexAnotacao);
       } else {
         this.add();
       }

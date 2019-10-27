@@ -10,7 +10,7 @@ import { ToastController, NavController } from '@ionic/angular';
 })
 export class ConfigPagePage implements OnInit {
 
-  private configApp: ConfigApp; 
+  public configApp: ConfigApp; 
 
   constructor(private nativeStorage: NativeStorage, 
               private navCtrl: NavController, 

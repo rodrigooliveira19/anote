@@ -12,7 +12,7 @@ import { ConfigApp } from '../model/config';
 export class ComponenteConfigComponent implements OnInit {
   
   platform: Platform; 
-  private configApp: any; 
+  public configApp: any; 
 
   constructor(private nativeStorage: NativeStorage, 
               private navCtrl: NavController) {}
